@@ -4,12 +4,14 @@
   "description": "A webapp for watching shows and getting suggestions based on your series.",
   "main": "index.js",
   "scripts": {
-    "build:css": "node-sass --include-path scss src/main.scss dist/css/styles.css",
-    "build:js": "bash -c \"browserify src/index.js -o dist/bundle.js -t [ babelify --presets [ es2015, react ] ] && npm run uglify\"",
+    "build:css": "node-sass --include-path scss src/index.scss ./dist/css/styles.css",
+    "build:js": "bash -c \"browserify src/index.jsx --extension=jsx -o dist/bundle.js -t [ babelify --presets [ es2015 react ] ]\"",
     "uglify": "uglifyjs --compress --mangle -- dist/bundle.js > dist/bundle.min.js && rm dist/bundle.js",
     "clean": "rm -rf dist",
     "server": "http-server dist",
-    "build:all": "npm run clean && (npm run build:css && npm run build:js )",
+    "copy:assets": "bash -c \"mkdir -p ./dist/ && cp -R ./src/assets ./dist/\"",
+    "copy:html": "bash -c \"mkdir -p ./dist/ && cp -R ./src/index.html ./dist/\"",
+    "build:all": "npm run clean && ( npm run copy:html && npm run build:css && npm run build:js )",
     "watch": "nodemon --ignore dist/ -e scss,html,jsx,js -x \"npm run build:all\"",
     "start": "bash -c \"(npm run server & npm run watch)\""
   },
@@ -23,12 +25,14 @@
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
     "babelify": "^7.3.0",
     "browserify": "^13.1.0",
     "handlebars": "^4.0.5",
     "http-server": "^0.9.0",
     "node-sass": "^3.8.0",
-    "uglify-js": "^2.7.3",
-    "nodemon": "^1.10.0"
+    "nodemon": "^1.10.0",
+    "react-dom": "^15.3.1",
+    "uglify-js": "^2.7.3"
   }
 }
