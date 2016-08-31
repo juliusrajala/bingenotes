@@ -1,4 +1,5 @@
 import React from 'react';
+import EditorPage from './ui/pages/Editor/EditorPage';
 
 export default React.createClass({
   componentWillMount(){
@@ -7,7 +8,7 @@ export default React.createClass({
   render(){
     return(
       <div>
-        Hello World!
+        <EditorPage />
       </div>
     );
   }

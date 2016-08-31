@@ -7,6 +7,7 @@
     "build:css": "node-sass --include-path scss src/index.scss ./dist/css/styles.css",
     "build:js": "bash -c \"browserify src/index.jsx --extension=jsx -o dist/bundle.js -t [ babelify --presets [ es2015 react ] ]\"",
     "uglify": "uglifyjs --compress --mangle -- dist/bundle.js > dist/bundle.min.js && rm dist/bundle.js",
+    "test": "bash -c \"mocha ./src/test/ --compilers js:babel-core/register --require ./src/test/testHelper.js --recursive\"",
     "clean": "rm -rf dist",
     "server": "http-server dist",
     "copy:assets": "bash -c \"mkdir -p ./dist/ && cp -R ./src/assets ./dist/\"",
@@ -14,6 +15,12 @@
     "build:all": "npm run clean && ( npm run copy:html && npm run build:css && npm run build:js )",
     "watch": "nodemon --ignore dist/ -e scss,html,jsx,js -x \"npm run build:all\"",
     "start": "bash -c \"(npm run server & npm run watch)\""
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
   },
   "author": "Julius Rajala",
   "license": "ISC",
@@ -24,12 +31,16 @@
     "redux": "^3.5.2"
   },
   "devDependencies": {
+    "babel-core": "^6.14.0",
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-react": "^6.11.1",
     "babelify": "^7.3.0",
     "browserify": "^13.1.0",
+    "chai": "^3.5.0",
+    "chai-immutable": "^1.6.0",
     "handlebars": "^4.0.5",
     "http-server": "^0.9.0",
+    "mocha": "^3.0.2",
     "node-sass": "^3.8.0",
     "nodemon": "^1.10.0",
     "react-dom": "^15.3.1",
